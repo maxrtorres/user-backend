@@ -1,9 +1,11 @@
 package util;
 
+import model.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class Database {
     private static final String databaseUrl = System.getenv("DATABASE_URL");
@@ -31,5 +33,11 @@ public class Database {
                 + "full_name VARCHAR(50) NOT NULL"
                 + ");";
         statement.executeUpdate(sql);
+        List<User> users = SampleData.sampleUsers();
+        for (User user : users) {
+            sql = "INSERT INTO user VALUES(\"%s\", \"%s\");";
+            statement.executeUpdate(String.format(sql,
+                    user.getUsername(), user.getFullName()));
+        }
     }
 }
