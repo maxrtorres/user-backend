@@ -26,5 +26,10 @@ public class Database {
     private static void createUserTable(Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
         statement.executeUpdate("DROP TABLE IF EXISTS user");
+        String sql = "CREATE TABLE user("
+                + "username VARCHAR(50) NOT NULL PRIMARY KEY,"
+                + "full_name VARCHAR(50) NOT NULL"
+                + ");";
+        statement.executeUpdate(sql);
     }
 }
