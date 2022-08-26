@@ -25,6 +25,6 @@ public class Database {
 
     private static void createUsersTable(Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
-        int res = statement.executeUpdate("DROP TABLE IF EXISTS users");
+        statement.executeUpdate("DROP TABLE IF EXISTS user");
     }
 }
