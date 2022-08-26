@@ -9,10 +9,7 @@ public class Server {
         try {
             Connection conn = getConnection();
             Statement statement = conn.createStatement();
-            ResultSet res = statement.executeQuery("SELECT * FROM users");
-            while (res.next()) {
-                System.out.println("id: " + res.getInt("id"));
-            }
+            ResultSet res = statement.executeQuery("SELECT * FROM user");
         } catch (SQLException e) {
             e.printStackTrace();
         }

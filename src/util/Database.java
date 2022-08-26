@@ -17,14 +17,14 @@ public class Database {
     public static void main(String[] args) {
         try {
             Connection conn = util.Database.getConnection();
-            createUsersTable(conn);
+            createUserTable(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private static void createUsersTable(Connection conn) throws SQLException {
+    private static void createUserTable(Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
-        int res = statement.executeUpdate("DROP TABLE IF EXISTS users");
+        statement.executeUpdate("DROP TABLE IF EXISTS user");
     }
 }
