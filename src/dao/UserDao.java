@@ -14,12 +14,12 @@ public class UserDao {
         this.conn = conn;
     }
 
-    public boolean create(String username, String fullName) {
+    public boolean create(User user) {
         try {
             String sql = "INSERT INTO user VALUES(\"%s\", \"%s\");";
             Statement statement = conn.createStatement();
             int res = statement.executeUpdate(String.format(sql,
-                    username, fullName));
+                    user.getUsername(), user.getFullName()));
             return res == 1;
         }
         catch (SQLException e) {
