@@ -17,12 +17,12 @@ public class UserDao {
         this.conn = conn;
     }
 
-    public boolean create(User user) {
+    public boolean create(String username, String full_name) {
         try {
             String sql = "INSERT INTO user VALUES(\"%s\", \"%s\");";
             Statement statement = conn.createStatement();
             int res = statement.executeUpdate(String.format(sql,
-                    user.getUsername(), user.getFullName()));
+                    username, full_name));
             return res == 1;
         }
         catch (SQLException e) {
@@ -57,6 +57,14 @@ public class UserDao {
         catch (SQLException e) {
             throw new DaoException(e.getMessage(), e);
         }
+    }
+
+    public boolean update(String username, String new_name) {
+        return false;
+    }
+
+    public boolean delete(String username) {
+        return false;
     }
 
     private List<User> getUserList(ResultSet rs) throws SQLException {
