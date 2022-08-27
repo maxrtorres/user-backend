@@ -36,8 +36,23 @@ public class UserDao {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(String.format(sql,username));
             List<User> users = getUserList(rs);
-            if (users.size() != 1) throw new SQLException();
+            if (users.size() > 1) throw new SQLException();
+            if (users.size() == 0) return null;
             return users.get(0);
+        }
+        catch (SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        }
+    }
+
+    public List<User> readAll() {
+        try {
+            String sql = "SELECT * FROM user;";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            List<User> users = getUserList(rs);
+            if (users.size() == 0) return null;
+            return users;
         }
         catch (SQLException e) {
             throw new DaoException(e.getMessage(), e);
