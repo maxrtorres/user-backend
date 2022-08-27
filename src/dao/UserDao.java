@@ -1,6 +1,10 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import exceptions.DaoException;
 import model.User;
 
 public class UserDao {
@@ -10,9 +14,17 @@ public class UserDao {
         this.conn = conn;
     }
 
-    public User create(String username, String fullName) {
-        User user = new User(username, fullName);
-        return user;
+    public boolean create(String username, String fullName) {
+        try {
+            String sql = "INSERT INTO user VALUES(\"%s\", \"%s\");";
+            Statement statement = conn.createStatement();
+            int res = statement.executeUpdate(String.format(sql,
+                    username, fullName));
+            return res == 1;
+        }
+        catch (SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        }
     }
 
     public User read(String username) {

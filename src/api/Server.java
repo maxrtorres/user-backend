@@ -1,18 +1,19 @@
 package api;
 
 import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import exceptions.DaoException;
 import static util.Database.getConnection;
+import dao.UserDao;
 
 public class Server {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        Connection conn = getConnection();
         try {
-            Connection conn = getConnection();
-            Statement statement = conn.createStatement();
-            ResultSet res = statement.executeQuery("SELECT * FROM user");
-        } catch (SQLException e) {
+            UserDao userDao = new UserDao(conn);
+            userDao.create("3","4");
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
