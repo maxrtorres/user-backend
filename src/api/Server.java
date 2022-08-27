@@ -13,7 +13,7 @@ public class Server {
         Connection conn = getConnection();
         try {
             UserDao userDao = new UserDao(conn);
-            userDao.create(new User("10", "2"));
+            System.out.print(userDao.read("jsmith30"));
         } catch (DaoException e) {
             e.printStackTrace();
         }
