@@ -17,7 +17,7 @@ public class UserDao {
         this.conn = conn;
     }
 
-    public boolean create(String username, String full_name) {
+    public boolean create(String username, String full_name) throws DaoException {
         try {
             String sql = "INSERT INTO user VALUES(\"%s\", \"%s\");";
             Statement statement = conn.createStatement();
@@ -30,7 +30,7 @@ public class UserDao {
         }
     }
 
-    public User read(String username) {
+    public User read(String username) throws DaoException {
         try {
             String sql = "SELECT * FROM user WHERE username=\"%s\";";
             Statement statement = conn.createStatement();
@@ -45,7 +45,7 @@ public class UserDao {
         }
     }
 
-    public List<User> readAll() {
+    public List<User> readAll() throws DaoException {
         try {
             String sql = "SELECT * FROM user;";
             Statement statement = conn.createStatement();
@@ -59,7 +59,7 @@ public class UserDao {
         }
     }
 
-    public boolean update(String username, String new_name) {
+    public boolean update(String username, String new_name) throws DaoException {
         try {
             String sql = "UPDATE user SET full_name = \"%s\" WHERE username = \"%s\";";
             Statement statement = conn.createStatement();
@@ -72,7 +72,7 @@ public class UserDao {
         }
     }
 
-    public boolean delete(String username) {
+    public boolean delete(String username) throws DaoException {
         try {
             String sql = "DELETE FROM user WHERE username = \"%s\";";
             Statement statement = conn.createStatement();
