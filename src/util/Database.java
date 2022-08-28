@@ -16,13 +16,9 @@ public class Database {
         return DriverManager.getConnection(databaseUrl, user, password);
     }
 
-    public static void main(String[] args) {
-        try {
-            Connection conn = util.Database.getConnection();
-            createUserTable(conn);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws SQLException {
+        Connection conn = util.Database.getConnection();
+        createUserTable(conn);
     }
 
     private static void createUserTable(Connection conn) throws SQLException {
