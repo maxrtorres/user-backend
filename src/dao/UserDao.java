@@ -60,7 +60,16 @@ public class UserDao {
     }
 
     public boolean update(String username, String new_name) {
-        return false;
+        try {
+            String sql = "UPDATE user SET full_name = \"%s\" WHERE username = \"%s\";";
+            Statement statement = conn.createStatement();
+            int res = statement.executeUpdate(String.format(sql,
+                    new_name, username));
+            return res == 1;
+        }
+        catch (SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        }
     }
 
     public boolean delete(String username) {
