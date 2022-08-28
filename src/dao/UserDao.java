@@ -73,7 +73,15 @@ public class UserDao {
     }
 
     public boolean delete(String username) {
-        return false;
+        try {
+            String sql = "DELETE FROM user WHERE username = \"%s\";";
+            Statement statement = conn.createStatement();
+            int res = statement.executeUpdate(String.format(sql, username));
+            return res == 1;
+        }
+        catch (SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        }
     }
 
     private List<User> getUserList(ResultSet rs) throws SQLException {
