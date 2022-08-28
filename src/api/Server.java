@@ -11,7 +11,7 @@ import model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Server {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ApiException {
         Connection conn = getConnection();
         UserDao userDao = new UserDao(conn);
         port(4567);
