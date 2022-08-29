@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import exceptions.DaoException;
 import static util.Database.getConnection;
 import dao.UserDao;
@@ -46,30 +47,38 @@ public class Server {
                     }
                 });
                 post("", (req, res) -> {
-                    User user = mapper.readValue(req.body(), User.class);
                     try {
+                        User user = mapper.readValue(req.body(), User.class);
                         userDao.create(user.getUsername(), user.getFullName());
                         res.status(201);
-                        return "";
+                        return mapper.writeValueAsString(user);
                     }
                     catch (DaoException e) {
                         halt(500, "Internal Server Error");
+                        return "";
+                    }
+                    catch (Exception e) {
+                        halt(400, "Bad Request");
                         return "";
                     }
                 });
                 put("/:username", (req, res) -> {
                     String username = req.params("username");
-                    User user = mapper.readValue(req.body(), User.class);
-                    if (!username.equals(user.getUsername())) {
-                        halt(400, "Bad Request");
-                        return "";
-                    }
                     try {
+                        User user = mapper.readValue(req.body(), User.class);
+                        if (!username.equals(user.getUsername())) {
+                            halt(400, "Bad Request");
+                            return "";
+                        }
                         userDao.update(username, user.getFullName());
-                        return "";
+                        return mapper.writeValueAsString(user);
                     }
                     catch (DaoException e) {
                         halt(500, "Internal Server Error");
+                        return "";
+                    }
+                    catch (Exception e) {
+                        halt(400, "Bad Request");
                         return "";
                     }
                 });
