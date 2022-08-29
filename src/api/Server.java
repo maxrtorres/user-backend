@@ -2,6 +2,8 @@ package api;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+
 import exceptions.DaoException;
 import static util.Database.getConnection;
 import dao.UserDao;
@@ -18,6 +20,16 @@ public class Server {
 
         path("/api", () -> {
             path("/users", () -> {
+                get("", (req, res) -> {
+                    try {
+                        List<User> users = userDao.readAll();
+                        return mapper.writeValueAsString(users);
+                    }
+                    catch (DaoException e) {
+                        halt(500,"Internal Server Error");
+                        return null;
+                    }
+                });
                 get("/:username", (req, res) -> {
                     String username = req.params("username");
                     try {

@@ -51,7 +51,6 @@ public class UserDao {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             List<User> users = getUserList(rs);
-            if (users.size() == 0) return null;
             return users;
         }
         catch (SQLException e) {
