@@ -2,14 +2,14 @@ package api;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import static util.Database.getConnection;
+import static util.Database.getSqlConnection;
 import dao.UserDao;
 import static spark.Spark.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Server {
     public static void main(String[] args) throws SQLException {
-        Connection conn = getConnection();
+        Connection conn = getSqlConnection();
         UserDao userDao = new UserDao(conn);
         port(4567);
         ObjectMapper mapper = new ObjectMapper();

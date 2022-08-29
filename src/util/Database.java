@@ -12,12 +12,12 @@ public class Database {
     private static final String user = System.getenv("USER");
     private static final String password = System.getenv("PASSWORD");
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getSqlConnection() throws SQLException {
         return DriverManager.getConnection(databaseUrl, user, password);
     }
 
     public static void main(String[] args) throws SQLException {
-        Connection conn = util.Database.getConnection();
+        Connection conn = getSqlConnection();
         createUserTable(conn);
     }
 
