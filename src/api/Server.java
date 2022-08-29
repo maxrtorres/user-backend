@@ -82,6 +82,20 @@ public class Server {
                         return "";
                     }
                 });
+                delete("/:username", (req, res) -> {
+                    String username = req.params("username");
+                    try {
+                        if (!userDao.delete(username)) {
+                            halt(404, "Not Found");
+                            return "";
+                        }
+                        return "";
+                    }
+                    catch (DaoException e) {
+                        halt(500, "Internal Server Error");
+                        return "";
+                    }
+                });
             });
         });
     }
