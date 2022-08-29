@@ -27,7 +27,7 @@ public class Server {
                     }
                     catch (DaoException e) {
                         halt(500,"Internal Server Error");
-                        return null;
+                        return "";
                     }
                 });
                 get("/:username", (req, res) -> {
@@ -36,13 +36,41 @@ public class Server {
                         User user = userDao.read(username);
                         if (user == null)  {
                             halt(404, "Not Found");
-                            return null;
+                            return "";
                         }
                         return mapper.writeValueAsString(user);
                     }
                     catch (DaoException e) {
                         halt(500, "Internal Server Error");
-                        return null;
+                        return "";
+                    }
+                });
+                post("", (req, res) -> {
+                    User user = mapper.readValue(req.body(), User.class);
+                    try {
+                        userDao.create(user.getUsername(), user.getFullName());
+                        res.status(201);
+                        return "";
+                    }
+                    catch (DaoException e) {
+                        halt(500, "Internal Server Error");
+                        return "";
+                    }
+                });
+                put("/:username", (req, res) -> {
+                    String username = req.params("username");
+                    User user = mapper.readValue(req.body(), User.class);
+                    if (!username.equals(user.getUsername())) {
+                        halt(400, "Bad Request");
+                        return "";
+                    }
+                    try {
+                        userDao.update(username, user.getFullName());
+                        return "";
+                    }
+                    catch (DaoException e) {
+                        halt(500, "Internal Server Error");
+                        return "";
                     }
                 });
             });

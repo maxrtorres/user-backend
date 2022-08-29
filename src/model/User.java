@@ -4,6 +4,11 @@ public class User {
     private final String username;
     private final String fullName;
 
+    public User() {
+        this.username = null;
+        this.fullName = null;
+    }
+
     public User(String username, String fullName) {
         this.username = username;
         this.fullName = fullName;
