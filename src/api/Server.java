@@ -3,8 +3,6 @@ package api;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-
-import com.fasterxml.jackson.core.JsonParseException;
 import exceptions.DaoException;
 import static util.Database.getConnection;
 import dao.UserDao;
@@ -19,7 +17,7 @@ public class Server {
         port(4567);
         ObjectMapper mapper = new ObjectMapper();
 
-        path("/api", () -> {
+        path("/api", () ->
             path("/users", () -> {
                 get("", (req, res) -> {
                     try {
@@ -96,7 +94,7 @@ public class Server {
                         return "";
                     }
                 });
-            });
-        });
+            })
+        );
     }
 }
