@@ -2,7 +2,6 @@ package api;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import exceptions.ApiException;
 import exceptions.DaoException;
 import static util.Database.getConnection;
 import dao.UserDao;
@@ -11,7 +10,7 @@ import model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Server {
-    public static void main(String[] args) throws SQLException, ApiException {
+    public static void main(String[] args) throws SQLException {
         Connection conn = getConnection();
         UserDao userDao = new UserDao(conn);
         port(4567);
@@ -21,8 +20,18 @@ public class Server {
             path("/users", () -> {
                 get("/:username", (req, res) -> {
                     String username = req.params("username");
-                    User user = userDao.read(username);
-                    return mapper.writeValueAsString(user);
+                    try {
+                        User user = userDao.read(username);
+                        if (user == null)  {
+                            halt(404, "Not Found");
+                            return null;
+                        }
+                        return mapper.writeValueAsString(user);
+                    }
+                    catch (DaoException e) {
+                        halt(500, "Internal Server Error");
+                        return null;
+                    }
                 });
             });
         });
