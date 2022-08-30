@@ -80,11 +80,12 @@ public class UserApi {
     public static Route deleteUser = (req, res) -> {
         String username = req.params("username");
         try {
-            if (!userDao.delete(username)) {
+            User user = userDao.read(username);
+            if (user == null || !userDao.delete(username)) {
                 halt(404, "Not Found");
                 return "";
             }
-            return "";
+            return mapper.writeValueAsString(user);
         } catch (DaoException e) {
             halt(500, "Internal Server Error");
             return "";
