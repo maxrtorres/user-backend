@@ -1,5 +1,8 @@
 package api;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import kong.unirest.Unirest;
+import model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,13 +12,14 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.junit.Assert.assertEquals;
 
 public class ServerTest {
 
     private static Connection conn;
     private final String BASE_URL = "http://localhost:4567/api";
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @BeforeAll
     public static void startServer() throws SQLException {
@@ -55,6 +59,24 @@ public class ServerTest {
         String url = BASE_URL + "/users/idontexist";
         HttpResponse<JsonNode> res = Unirest.get(url).asJson();
         assertEquals(404, res.getStatus());
+        assertEquals(null, res.getBody());
+    }
+
+    @Test
+    public void postUser() throws JsonProcessingException {
+        String url = BASE_URL + "/users";
+        User user = new User("jsmith1","James Smith");
+        HttpResponse<JsonNode> res = Unirest.post(url)
+                .body(mapper.writeValueAsString(user)).asJson();
+        assertEquals(201, res.getStatus());
+        assertEquals(1, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void postUserNoBodyFails() throws JsonProcessingException {
+        String url = BASE_URL + "/users";
+        HttpResponse<JsonNode> res = Unirest.post(url).asJson();
+        assertEquals(400, res.getStatus());
         assertEquals(null, res.getBody());
     }
 }
