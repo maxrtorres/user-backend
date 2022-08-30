@@ -27,7 +27,7 @@ public class Server {
         );
     }
 
-    public static void stop() {
+    public static void stopServer() {
         stop();
     }
 }
