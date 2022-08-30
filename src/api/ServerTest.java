@@ -13,7 +13,8 @@ import kong.unirest.JsonNode;
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ServerTest {
 
@@ -59,7 +60,7 @@ public class ServerTest {
         String url = BASE_URL + "/users/idontexist";
         HttpResponse<JsonNode> res = Unirest.get(url).asJson();
         assertEquals(404, res.getStatus());
-        assertEquals(null, res.getBody());
+        assertNull(res.getBody());
     }
 
     @Test
@@ -77,7 +78,7 @@ public class ServerTest {
         String url = BASE_URL + "/users";
         HttpResponse<JsonNode> res = Unirest.post(url).asJson();
         assertEquals(400, res.getStatus());
-        assertEquals(null, res.getBody());
+        assertNull(res.getBody());
     }
 
     @Test
@@ -95,7 +96,7 @@ public class ServerTest {
         String url = BASE_URL + "/users/alee3";
         HttpResponse<JsonNode> res = Unirest.put(url).asJson();
         assertEquals(400, res.getStatus());
-        assertEquals(null, res.getBody());
+        assertNull(res.getBody());
     }
 
     @Test
@@ -111,6 +112,6 @@ public class ServerTest {
         String url = BASE_URL + "/users/idontexist";
         HttpResponse<JsonNode> res = Unirest.delete(url).asJson();
         assertEquals(404, res.getStatus());
-        assertEquals(null, res.getBody());
+        assertNull(res.getBody());
     }
 }
