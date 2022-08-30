@@ -73,10 +73,44 @@ public class ServerTest {
     }
 
     @Test
-    public void postUserNoBodyFails() throws JsonProcessingException {
+    public void postUserNoBodyFails() {
         String url = BASE_URL + "/users";
         HttpResponse<JsonNode> res = Unirest.post(url).asJson();
         assertEquals(400, res.getStatus());
+        assertEquals(null, res.getBody());
+    }
+
+    @Test
+    public void putUser() throws JsonProcessingException {
+        String url = BASE_URL + "/users/alee3";
+        User user = new User("alee3","Alexander Lee");
+        HttpResponse<JsonNode> res = Unirest.put(url)
+                .body(mapper.writeValueAsString(user)).asJson();
+        assertEquals(200, res.getStatus());
+        assertEquals(1, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void putUserNoBodyFails() {
+        String url = BASE_URL + "/users/alee3";
+        HttpResponse<JsonNode> res = Unirest.put(url).asJson();
+        assertEquals(400, res.getStatus());
+        assertEquals(null, res.getBody());
+    }
+
+    @Test
+    public void deleteUser() {
+        String url = BASE_URL + "/users/alee3";
+        HttpResponse<JsonNode> res = Unirest.delete(url).asJson();
+        assertEquals(200, res.getStatus());
+        assertEquals(1, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void deleteNonexistentUserFails() {
+        String url = BASE_URL + "/users/idontexist";
+        HttpResponse<JsonNode> res = Unirest.delete(url).asJson();
+        assertEquals(404, res.getStatus());
         assertEquals(null, res.getBody());
     }
 }
