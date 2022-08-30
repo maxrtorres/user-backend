@@ -41,4 +41,20 @@ public class ServerTest {
         assertEquals(200, res.getStatus());
         assertEquals(3, res.getBody().getArray().length());
     }
+
+    @Test
+    public void getUserByUsername() {
+        String url = BASE_URL + "/users/alee3";
+        HttpResponse<JsonNode> res = Unirest.get(url).asJson();
+        assertEquals(200, res.getStatus());
+        assertEquals(1, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void getNonexistentUserFails() {
+        String url = BASE_URL + "/users/idontexist";
+        HttpResponse<JsonNode> res = Unirest.get(url).asJson();
+        assertEquals(404, res.getStatus());
+        assertEquals(null, res.getBody());
+    }
 }
