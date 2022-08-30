@@ -18,6 +18,10 @@ public class Database {
 
     public static void main(String[] args) throws SQLException {
         Connection conn = getSqlConnection();
+        resetDatabase(conn);
+    }
+
+    public static void resetDatabase(Connection conn) throws SQLException {
         createUserTable(conn);
     }
 

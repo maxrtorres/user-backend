@@ -26,4 +26,8 @@ public class Server {
             })
         );
     }
+
+    public static void stop() {
+        stop();
+    }
 }
