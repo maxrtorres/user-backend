@@ -1,5 +1,6 @@
 package util;
 
+import model.Post;
 import model.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -54,5 +55,12 @@ public class Database {
                 + "FOREIGN KEY (author) REFERENCES user(username) ON DELETE CASCADE"
                 + ");";
         statement.executeUpdate(sql);
+        List<Post> posts = SampleData.samplePosts();
+        for (Post post : posts) {
+            sql = "INSERT INTO post VALUES(\"%s\", \"%s\", \"%s\", \"%s\");";
+            statement.executeUpdate(String.format(sql,
+                    post.getId(), post.getAuthor(),
+                    post.getTimePosted(), post.getContent()));
+        }
     }
 }
