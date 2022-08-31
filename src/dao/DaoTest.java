@@ -61,7 +61,8 @@ public class DaoTest {
 
     @Test
     public void readNonexistentUserFails() {
-
+        User daoUser = userDao.read("idontexist");
+        assertNull(daoUser);
     }
 
     @Test
