@@ -23,10 +23,12 @@ public class Database {
 
     public static void resetDatabase(Connection conn) throws SQLException {
         createUserTable(conn);
+        createPostTable(conn);
     }
 
     private static void createUserTable(Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
+        statement.executeUpdate("DROP TABLE IF EXISTS post");
         statement.executeUpdate("DROP TABLE IF EXISTS user");
         String sql = "CREATE TABLE user("
                 + "username VARCHAR(50) NOT NULL PRIMARY KEY,"
@@ -39,5 +41,18 @@ public class Database {
             statement.executeUpdate(String.format(sql,
                     user.getUsername(), user.getFullName()));
         }
+    }
+
+    private static void createPostTable(Connection conn) throws SQLException {
+        Statement statement = conn.createStatement();
+        statement.executeUpdate("DROP TABLE IF EXISTS post");
+        String sql = "CREATE TABLE post("
+                + "id VARCHAR(50) NOT NULL PRIMARY KEY,"
+                + "author VARCHAR(50) NOT NULL,"
+                + "time_posted DATETIME NOT NULL,"
+                + "content VARCHAR(280) NOT NULL,"
+                + "FOREIGN KEY (author) REFERENCES user(username) ON DELETE CASCADE"
+                + ");";
+        statement.executeUpdate(sql);
     }
 }
