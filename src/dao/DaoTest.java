@@ -71,7 +71,11 @@ public class DaoTest {
 
     @Test
     public void updateUser() {
-
+        for (User user : sampleUsers) {
+            assert(userDao.update(user.getUsername(),"New Name"));
+            assertEquals("New Name",
+                    userDao.read(user.getUsername()).getFullName());
+        }
     }
 
     @Test
