@@ -67,7 +67,9 @@ public class DaoTest {
 
     @Test
     public void createUser() {
-
+        User user = new User("new2","New User");
+        assert(userDao.create(user.getUsername(),user.getFullName()));
+        assertEquals(user, userDao.read(user.getUsername()));
     }
 
     @Test
