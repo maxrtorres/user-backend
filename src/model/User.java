@@ -24,7 +24,7 @@ public class User {
 
     @Override
     public String toString() {
-        return username + ": " + fullName;
+        return String.format("(%s, %s)", username, fullName);
     }
 
     @Override
