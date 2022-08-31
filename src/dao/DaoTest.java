@@ -11,7 +11,6 @@ import util.SampleData;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class DaoTest {
     @BeforeAll
     public static void startServer() throws SQLException {
         sampleUsers = SampleData.sampleUsers();
-        Collections.sort(sampleUsers, Comparator.comparing(User::getUsername));
+        sampleUsers.sort(Comparator.comparing(User::getUsername));
         conn = Database.getSqlConnection();
         userDao = new UserDao(conn);
         Server.main(null);
@@ -47,7 +46,7 @@ public class DaoTest {
     @Test
     public void readAllUsers() {
         List<User> daoUsers = userDao.readAll();
-        Collections.sort(daoUsers, Comparator.comparing(User::getUsername));
+        daoUsers.sort(Comparator.comparing(User::getUsername));
         assertIterableEquals(sampleUsers, daoUsers);
     }
 
