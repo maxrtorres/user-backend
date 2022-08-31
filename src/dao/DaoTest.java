@@ -14,9 +14,7 @@ import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DaoTest {
     private static List<User> sampleUsers;
@@ -78,11 +76,15 @@ public class DaoTest {
 
     @Test
     public void deleteUser() {
-
+        for (User user : sampleUsers) {
+            assert(userDao.delete(user.getUsername()));
+            assertNull(userDao.read(user.getUsername()));
+        }
+        assertEquals(0, userDao.readAll().size());
     }
 
     @Test
     public void deleteNonexistentUserFails() {
-
+        assertFalse(userDao.delete("idontexist"));
     }
 }
