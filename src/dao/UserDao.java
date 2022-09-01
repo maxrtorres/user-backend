@@ -17,13 +17,12 @@ public class UserDao {
         this.conn = conn;
     }
 
-    public boolean create(String username, String full_name) throws DaoException {
+    public List<User> readAll() throws DaoException {
         try {
-            String sql = "INSERT INTO user VALUES(\"%s\", \"%s\");";
+            String sql = "SELECT * FROM user;";
             Statement statement = conn.createStatement();
-            int res = statement.executeUpdate(String.format(sql,
-                    username, full_name));
-            return res == 1;
+            ResultSet rs = statement.executeQuery(sql);
+            return getUserList(rs);
         }
         catch (SQLException e) {
             throw new DaoException(e.getMessage(), e);
@@ -45,13 +44,13 @@ public class UserDao {
         }
     }
 
-    public List<User> readAll() throws DaoException {
+    public boolean create(String username, String full_name) throws DaoException {
         try {
-            String sql = "SELECT * FROM user;";
+            String sql = "INSERT INTO user VALUES(\"%s\", \"%s\");";
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            List<User> users = getUserList(rs);
-            return users;
+            int res = statement.executeUpdate(String.format(sql,
+                    username, full_name));
+            return res == 1;
         }
         catch (SQLException e) {
             throw new DaoException(e.getMessage(), e);
