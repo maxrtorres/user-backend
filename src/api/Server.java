@@ -20,15 +20,18 @@ public class Server {
         PostApi.postDao =postDao;
         PostApi.mapper = mapper;
 
-        path("/api", () ->
-            path("/users", () -> {
-                get("", UserApi.getAllUsers);
-                get("/:username", UserApi.getUser);
-                post("", UserApi.postUser);
-                put("/:username", UserApi.putUser);
-                delete("/:username", UserApi.deleteUser);
-            })
-        );
+        path("/api", () -> {
+                path("/users", () -> {
+                    get("", UserApi.getAllUsers);
+                    get("/:username", UserApi.getUser);
+                    post("", UserApi.postUser);
+                    put("/:username", UserApi.putUser);
+                    delete("/:username", UserApi.deleteUser);
+                });
+                path("/posts", () -> {
+                    get("", PostApi.getAllPosts);
+                });
+        });
     }
 
     public static void stopServer() {
