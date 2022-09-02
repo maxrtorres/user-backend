@@ -23,6 +23,13 @@ public class Post {
         this.content = content;
     }
 
+    public Post(String id, String author, String timePosted, String content) {
+        this.id = id;
+        this.author = author;
+        this.timePosted = Timestamp.valueOf(timePosted);
+        this.content = content;
+    }
+
     public String getId() {
         return id;
     }
