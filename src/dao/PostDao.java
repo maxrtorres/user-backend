@@ -30,6 +30,18 @@ public class PostDao {
         }
     }
 
+    public List<Post> readAllByAuthor(String author) throws DaoException {
+        try {
+            String sql = "SELECT * FROM post WHERE author=\"%s\";";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(String.format(sql,author));
+            return getPostList(rs);
+        }
+        catch (SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        }
+    }
+
     public Post read(String id) throws DaoException {
         try {
             String sql = "SELECT * FROM post WHERE id=\"%s\";";
