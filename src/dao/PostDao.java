@@ -2,6 +2,7 @@ package dao;
 
 import exceptions.DaoException;
 import model.Post;
+import model.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,6 +30,21 @@ public class PostDao {
         }
     }
 
+    public Post read(String id) throws DaoException {
+        try {
+            String sql = "SELECT * FROM post WHERE id=\"%s\";";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(String.format(sql,id));
+            List<Post> posts = getPostList(rs);
+            if (posts.size() > 1) throw new SQLException();
+            if (posts.size() == 0) return null;
+            return posts.get(0);
+        }
+        catch (SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        }
+    }
+
     private List<Post> getPostList(ResultSet rs) throws SQLException {
         List<Post> posts = new ArrayList<>();
         while (rs.next()) {
@@ -39,4 +55,5 @@ public class PostDao {
         }
         return posts;
     }
+
 }
