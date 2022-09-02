@@ -2,6 +2,7 @@ package api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kong.unirest.Unirest;
+import model.Post;
 import model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
@@ -12,7 +13,11 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import util.SampleData;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -21,22 +26,26 @@ public class ServerTest {
     private static Connection conn;
     private final String BASE_URL = "http://localhost:4567/api";
     private final ObjectMapper mapper = new ObjectMapper();
+    private static List<User> sampleUsers;
+    private static List<Post> samplePosts;
 
     @BeforeAll
     public static void startServer() throws SQLException {
         conn = Database.getSqlConnection();
+        sampleUsers = SampleData.sampleUsers();
+        samplePosts = SampleData.samplePosts();
         Server.main(null);
     }
 
     @BeforeEach
     public void resetDatabase() throws SQLException {
-        Database.resetDatabase(conn);
+        Database.resetDatabase(conn, sampleUsers, samplePosts);
     }
 
     @AfterAll
     public static void stopServer() throws SQLException {
         Server.stopServer();
-        Database.resetDatabase(conn);
+        Database.resetDatabase(conn, sampleUsers, samplePosts);
     }
 
     @Test

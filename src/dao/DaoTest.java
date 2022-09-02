@@ -1,6 +1,7 @@
 package dao;
 
 import api.Server;
+import model.Post;
 import model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DaoTest {
     private static List<User> sampleUsers;
+    private static List<Post> samplePosts;
     private static Connection conn;
     private static UserDao userDao;
 
@@ -25,6 +27,8 @@ public class DaoTest {
     public static void startServer() throws SQLException {
         sampleUsers = SampleData.sampleUsers();
         sampleUsers.sort(Comparator.comparing(User::getUsername));
+        samplePosts = SampleData.samplePosts();
+        samplePosts.sort(Comparator.comparing(Post::getAuthor));
         conn = Database.getSqlConnection();
         userDao = new UserDao(conn);
         Server.main(null);
@@ -32,13 +36,13 @@ public class DaoTest {
 
     @BeforeEach
     public void resetDatabase() throws SQLException {
-        Database.resetDatabase(conn);
+        Database.resetDatabase(conn, sampleUsers, samplePosts);
     }
 
     @AfterAll
     public static void stopServer() throws SQLException {
         Server.stopServer();
-        Database.resetDatabase(conn);
+        Database.resetDatabase(conn, sampleUsers, samplePosts);
     }
 
     @Test
