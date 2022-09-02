@@ -70,6 +70,19 @@ public class PostDao {
         }
     }
 
+    public boolean update(String id, String content) throws DaoException {
+        try {
+            String sql = "UPDATE post SET content = \"%s\" WHERE id = \"%s\";";
+            Statement statement = conn.createStatement();
+            int res = statement.executeUpdate(String.format(sql,
+                    content, id));
+            return res == 1;
+        }
+        catch (SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        }
+    }
+
     private List<Post> getPostList(ResultSet rs) throws SQLException {
         List<Post> posts = new ArrayList<>();
         while (rs.next()) {
