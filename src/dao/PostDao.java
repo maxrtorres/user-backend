@@ -83,6 +83,18 @@ public class PostDao {
         }
     }
 
+    public boolean delete(String id) throws DaoException {
+        try {
+            String sql = "DELETE FROM post WHERE id = \"%s\";";
+            Statement statement = conn.createStatement();
+            int res = statement.executeUpdate(String.format(sql, id));
+            return res == 1;
+        }
+        catch (SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        }
+    }
+
     private List<Post> getPostList(ResultSet rs) throws SQLException {
         List<Post> posts = new ArrayList<>();
         while (rs.next()) {
