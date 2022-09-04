@@ -3,6 +3,7 @@ package api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.PostDao;
 import exceptions.DaoException;
+import model.Post;
 import spark.Route;
 import static spark.Spark.halt;
 
@@ -26,7 +27,19 @@ public class PostApi {
     };
 
     public static Route getPost = (req, res) -> {
-        return "";
+        String id = req.params("id");
+        try {
+            Post post = postDao.read(id);
+            if (post == null)  {
+                halt(404, "Not Found");
+                return "";
+            }
+            return mapper.writeValueAsString(post);
+        }
+        catch (DaoException e) {
+            halt(500, "Internal Server Error");
+            return "";
+        }
     };
 
     public static Route postPost = (req, res) -> {
