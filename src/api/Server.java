@@ -30,6 +30,10 @@ public class Server {
                 });
                 path("/posts", () -> {
                     get("", PostApi.getAllPosts);
+                    get("/:id", PostApi.getPost);
+                    post("", PostApi.postPost);
+                    put("/:id", PostApi.putPost);
+                    delete("/:id", PostApi.deletePost);
                 });
         });
     }

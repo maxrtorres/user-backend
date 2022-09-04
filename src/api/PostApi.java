@@ -3,9 +3,7 @@ package api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.PostDao;
 import exceptions.DaoException;
-import model.Post;
 import spark.Route;
-import java.util.List;
 import static spark.Spark.halt;
 
 public class PostApi {
@@ -25,5 +23,21 @@ public class PostApi {
             halt(500,"Internal Server Error");
             return "";
         }
+    };
+
+    public static Route getPost = (req, res) -> {
+        return "";
+    };
+
+    public static Route postPost = (req, res) -> {
+        return "";
+    };
+
+    public static Route putPost = (req, res) -> {
+        return "";
+    };
+
+    public static Route deletePost = (req, res) -> {
+        return "";
     };
 }
