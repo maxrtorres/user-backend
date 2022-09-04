@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.PostDao;
 import exceptions.DaoException;
 import model.Post;
-import model.User;
 import spark.Route;
 import static spark.Spark.halt;
 
@@ -62,7 +61,20 @@ public class PostApi {
     };
 
     public static Route putPost = (req, res) -> {
-        return "";
+        String id = req.params("id");
+        try {
+            Post post = mapper.readValue(req.body(), Post.class);
+            postDao.update(id, post.getContent());
+            return mapper.writeValueAsString(post);
+        }
+        catch (DaoException e) {
+            halt(500, "Internal Server Error");
+            return "";
+        }
+        catch (Exception e) {
+            halt(400, "Bad Request");
+            return "";
+        }
     };
 
     public static Route deletePost = (req, res) -> {
