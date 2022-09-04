@@ -78,6 +78,18 @@ public class PostApi {
     };
 
     public static Route deletePost = (req, res) -> {
-        return "";
+        String id = req.params("id");
+        try {
+            Post post = postDao.read(id);
+            if (post == null || !postDao.delete(id)) {
+                halt(404, "Not Found");
+                return "";
+            }
+            return mapper.writeValueAsString(post);
+        } catch (DaoException e) {
+            halt(500, "Internal Server Error");
+            return "";
+        }
     };
+    
 }
