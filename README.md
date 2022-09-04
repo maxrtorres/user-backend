@@ -12,4 +12,4 @@ Here is how it works:
   - Queries use [MySQL](https://www.mysql.com/) syntax, but the database url and credentials are left as environment variables
 - The DAO returns data to the endpoint, which then responds to the request
 - Though there is no frontend, backend functionality is tested using
-[JUnit](https://junit.org/)
+[JUnit](https://junit.org/junit5/)
