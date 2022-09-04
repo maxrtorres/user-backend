@@ -1,4 +1,4 @@
-# user-backend
+# User Backend
 
 This is a backend application for storing and retrieving data on a set of social media users.
 Basic user data is maintained such as username and social media posts. 
