@@ -1,5 +1,8 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -16,7 +19,10 @@ public class Post {
         this.content = null;
     }
 
-    public Post(String author, String timePosted, String content) {
+    public Post(
+            @JsonProperty("author") String author,
+            @JsonProperty("timePosted") String timePosted,
+            @JsonProperty("content") String content) {
         this.id = UUID.randomUUID().toString();
         this.author = author;
         this.timePosted = Timestamp.valueOf(timePosted);

@@ -57,12 +57,12 @@ public class PostDao {
         }
     }
 
-    public boolean create(String author, String timePosted, String content) throws DaoException {
+    public boolean create(String id, String author, String timePosted, String content) throws DaoException {
         try {
             String sql = "INSERT INTO post VALUES(\"%s\", \"%s\", \"%s\", \"%s\");";
             Statement statement = conn.createStatement();
             int res = statement.executeUpdate(String.format(sql,
-                    UUID.randomUUID(), author, timePosted, content));
+                    id, author, timePosted, content));
             return res == 1;
         }
         catch (SQLException e) {
