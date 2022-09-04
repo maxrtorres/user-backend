@@ -17,7 +17,7 @@ public class Server {
         ObjectMapper mapper = new ObjectMapper();
         UserApi.userDao = userDao;
         UserApi.mapper = mapper;
-        PostApi.postDao =postDao;
+        PostApi.postDao = postDao;
         PostApi.mapper = mapper;
 
         path("/api", () -> {
