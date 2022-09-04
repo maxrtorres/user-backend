@@ -13,9 +13,13 @@ public class PostApi {
     public static ObjectMapper mapper;
 
     public static Route getAllPosts = (req, res) -> {
+        String author = req.queryParams("author");
         try {
-            List<Post> posts = postDao.readAll();
-            return mapper.writeValueAsString(posts);
+            if (author == null) {
+                return mapper.writeValueAsString(postDao.readAll());
+            }
+            return mapper.writeValueAsString(
+                    postDao.readAllByAuthor(author));
         }
         catch (DaoException e) {
             halt(500,"Internal Server Error");
