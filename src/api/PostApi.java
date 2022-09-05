@@ -11,7 +11,7 @@ public class PostApi {
     public static PostDao postDao;
     public static ObjectMapper mapper;
 
-    public static Route getAllPosts = (req, res) -> {
+    public static final Route getAllPosts = (req, res) -> {
         String author = req.queryParams("author");
         try {
             if (author == null) {
@@ -26,7 +26,7 @@ public class PostApi {
         }
     };
 
-    public static Route getPost = (req, res) -> {
+    public static final Route getPost = (req, res) -> {
         String id = req.params("id");
         try {
             Post post = postDao.read(id);
@@ -42,7 +42,7 @@ public class PostApi {
         }
     };
 
-    public static Route postPost = (req, res) -> {
+    public static final Route postPost = (req, res) -> {
         try {
             Post post = mapper.readValue(req.body(), Post.class);
             postDao.create(post.getId(), post.getAuthor(),
@@ -60,7 +60,7 @@ public class PostApi {
         }
     };
 
-    public static Route putPost = (req, res) -> {
+    public static final Route putPost = (req, res) -> {
         String id = req.params("id");
         try {
             Post post = mapper.readValue(req.body(), Post.class);
@@ -77,7 +77,7 @@ public class PostApi {
         }
     };
 
-    public static Route deletePost = (req, res) -> {
+    public static final Route deletePost = (req, res) -> {
         String id = req.params("id");
         try {
             Post post = postDao.read(id);

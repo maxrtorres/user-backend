@@ -12,7 +12,7 @@ public class UserApi {
     public static UserDao userDao;
     public static ObjectMapper mapper;
 
-    public static Route getAllUsers = (req, res) -> {
+    public static final Route getAllUsers = (req, res) -> {
         try {
             List<User> users = userDao.readAll();
             return mapper.writeValueAsString(users);
@@ -23,7 +23,7 @@ public class UserApi {
         }
     };
 
-    public static Route getUser = (req, res) -> {
+    public static final Route getUser = (req, res) -> {
         String username = req.params("username");
         try {
             User user = userDao.read(username);
@@ -39,7 +39,7 @@ public class UserApi {
         }
     };
 
-    public static Route postUser = (req, res) -> {
+    public static final Route postUser = (req, res) -> {
         try {
             User user = mapper.readValue(req.body(), User.class);
             userDao.create(user.getUsername(), user.getFullName());
@@ -56,7 +56,7 @@ public class UserApi {
         }
     };
 
-    public static Route putUser = (req, res) -> {
+    public static final Route putUser = (req, res) -> {
         String username = req.params("username");
         try {
             User user = mapper.readValue(req.body(), User.class);
@@ -77,7 +77,7 @@ public class UserApi {
         }
     };
 
-    public static Route deleteUser = (req, res) -> {
+    public static final Route deleteUser = (req, res) -> {
         String username = req.params("username");
         try {
             User user = userDao.read(username);
