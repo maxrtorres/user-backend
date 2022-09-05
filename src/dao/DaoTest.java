@@ -147,4 +147,20 @@ public class DaoTest {
                     postDao.read(post.getId()).getContent());
         }
     }
+
+    @Test
+    public void deletePost() {
+        for (Post post : samplePosts) {
+            String id = post.getId();
+            assert(postDao.delete(id));
+            assertNull(postDao.read(id));
+        }
+        assertEquals(0, postDao.readAll().size());
+    }
+
+    @Test
+    public void deleteNonexistentPostFails() {
+        assertFalse(postDao.delete("idontexist"));
+    }
+
 }
