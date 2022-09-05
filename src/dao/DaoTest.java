@@ -29,7 +29,7 @@ public class DaoTest {
         sampleUsers = SampleData.sampleUsers();
         sampleUsers.sort(Comparator.comparing(User::getUsername));
         samplePosts = SampleData.samplePosts();
-        samplePosts.sort(Comparator.comparing(Post::getAuthor));
+        samplePosts.sort(Comparator.comparing(Post::getId));
         conn = Database.getSqlConnection();
         userDao = new UserDao(conn);
         postDao = new PostDao(conn);
@@ -98,5 +98,35 @@ public class DaoTest {
     @Test
     public void deleteNonexistentUserFails() {
         assertFalse(userDao.delete("idontexist"));
+    }
+
+    @Test
+    public void readAllPosts() {
+        List<Post> daoPosts = postDao.readAll();
+        daoPosts.sort(Comparator.comparing(Post::getId));
+        assertIterableEquals(samplePosts, daoPosts);
+    }
+
+    @Test
+    public void readAllPostsByAuthor() {
+        List<Post> daoPosts = postDao.readAllByAuthor("alee3");
+        assertEquals(3, daoPosts.size());
+        for (Post post : daoPosts) {
+            assertTrue(samplePosts.contains(post));
+        }
+    }
+
+    @Test
+    public void readPostById() {
+        for (Post post : samplePosts) {
+            Post daoPost = postDao.read(post.getId());
+            assertEquals(post, daoPost);
+        }
+    }
+
+    @Test
+    public void readNonexistentPostFails() {
+        Post daoPost = postDao.read("idontexist");
+        assertNull(daoPost);
     }
 }

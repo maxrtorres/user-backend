@@ -30,7 +30,7 @@ public class SampleData {
         samplePosts.add(new Post("mgreen4", "2014-12-28 00:12:00",
                 "barn owls must have been stoked when the barn was invented"));
         samplePosts.add(new Post("jclark5", "2021-06-18 11:18:00",
-                "\\\"are you ok?\\\" no i got my sleeve wet washing the dishes"));
+                "are you ok? no i got my sleeve wet washing the dishes"));
         samplePosts.add(new Post("jclark5", "2021-08-30 07:59:00",
                 "cows are very calm considering the whole floor is food"));
         samplePosts.add(new Post("jclark5", "2019-04-03 14:24:00",
