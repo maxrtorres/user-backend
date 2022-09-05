@@ -22,6 +22,7 @@ public class DaoTest {
     private static List<Post> samplePosts;
     private static Connection conn;
     private static UserDao userDao;
+    private static PostDao postDao;
 
     @BeforeAll
     public static void startServer() throws SQLException {
@@ -31,6 +32,7 @@ public class DaoTest {
         samplePosts.sort(Comparator.comparing(Post::getAuthor));
         conn = Database.getSqlConnection();
         userDao = new UserDao(conn);
+        postDao = new PostDao(conn);
         Server.main(null);
     }
 
@@ -85,8 +87,10 @@ public class DaoTest {
     @Test
     public void deleteUser() {
         for (User user : sampleUsers) {
-            assert(userDao.delete(user.getUsername()));
-            assertNull(userDao.read(user.getUsername()));
+            String username = user.getUsername();
+            assert(userDao.delete(username));
+            assertNull(userDao.read(username));
+            assertEquals(0, postDao.readAllByAuthor(username).size());
         }
         assertEquals(0, userDao.readAll().size());
     }
