@@ -155,4 +155,23 @@ public class ServerTest {
         assertEquals(404, res.getStatus());
         assertNull(res.getBody());
     }
+
+    @Test
+    public void postPost() throws JsonProcessingException {
+        String url = BASE_URL + "/posts";
+        Post post = new Post("alee3",
+                "2020-01-01 00:00:00","Hello World");
+        HttpResponse<JsonNode> res = Unirest.post(url)
+                .body(mapper.writeValueAsString(post)).asJson();
+        assertEquals(201, res.getStatus());
+        assertEquals(1, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void postPostNoBodyFails() {
+        String url = BASE_URL + "/posts";
+        HttpResponse<JsonNode> res = Unirest.post(url).asJson();
+        assertEquals(400, res.getStatus());
+        assertNull(res.getBody());
+    }
 }
