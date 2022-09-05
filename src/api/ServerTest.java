@@ -191,4 +191,20 @@ public class ServerTest {
         assertEquals(400, res.getStatus());
         assertNull(res.getBody());
     }
+
+    @Test
+    public void deletePost() {
+        String url = BASE_URL + "/posts/" + samplePosts.get(0).getId();
+        HttpResponse<JsonNode> res = Unirest.delete(url).asJson();
+        assertEquals(200, res.getStatus());
+        assertEquals(1, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void deleteNonexistentPostFails() {
+        String url = BASE_URL + "/posts/idontexist";
+        HttpResponse<JsonNode> res = Unirest.delete(url).asJson();
+        assertEquals(404, res.getStatus());
+        assertNull(res.getBody());
+    }
 }
