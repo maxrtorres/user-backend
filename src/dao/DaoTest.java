@@ -129,4 +129,22 @@ public class DaoTest {
         Post daoPost = postDao.read("idontexist");
         assertNull(daoPost);
     }
+
+    @Test
+    public void createPost() {
+        Post post = new Post("alee3",
+                "2020-01-01 00:00:00", "Hello World");
+        assert(postDao.create(post.getId(), post.getAuthor(),
+                post.getTimePosted(), post.getContent()));
+        assertEquals(post, postDao.read(post.getId()));
+    }
+
+    @Test
+    public void updatePost() {
+        for (Post post : samplePosts) {
+            assert(postDao.update(post.getId(),"Hello World"));
+            assertEquals("Hello World",
+                    postDao.read(post.getId()).getContent());
+        }
+    }
 }
