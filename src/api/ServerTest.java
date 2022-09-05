@@ -114,6 +114,11 @@ public class ServerTest {
         HttpResponse<JsonNode> res = Unirest.delete(url).asJson();
         assertEquals(200, res.getStatus());
         assertEquals(1, res.getBody().getArray().length());
+
+        url = BASE_URL + "/posts?author=alee3";
+        res = Unirest.get(url).asJson();
+        assertEquals(200, res.getStatus());
+        assertEquals(0, res.getBody().getArray().length());
     }
 
     @Test
@@ -207,4 +212,5 @@ public class ServerTest {
         assertEquals(404, res.getStatus());
         assertNull(res.getBody());
     }
+
 }
