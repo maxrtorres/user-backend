@@ -12,10 +12,10 @@ public class Post {
     private final String content;
 
     public Post() {
-        this.id = null;
-        this.author = null;
-        this.timePosted = null;
-        this.content = null;
+        this.id = "";
+        this.author = "";
+        this.timePosted = new Timestamp(0);
+        this.content = "";
     }
 
     public Post(

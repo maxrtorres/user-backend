@@ -5,8 +5,8 @@ public class User {
     private final String fullName;
 
     public User() {
-        this.username = null;
-        this.fullName = null;
+        this.username = "";
+        this.fullName = "";
     }
 
     public User(String username, String fullName) {
