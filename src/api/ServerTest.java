@@ -123,4 +123,36 @@ public class ServerTest {
         assertEquals(404, res.getStatus());
         assertNull(res.getBody());
     }
+
+    @Test
+    public void getAllPosts() {
+        String url = BASE_URL + "/posts";
+        HttpResponse<JsonNode> res = Unirest.get(url).asJson();
+        assertEquals(200, res.getStatus());
+        assertEquals(9, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void getAllPostsByAuthor() {
+        String url = BASE_URL + "/posts?author=alee3";
+        HttpResponse<JsonNode> res = Unirest.get(url).asJson();
+        assertEquals(200, res.getStatus());
+        assertEquals(3, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void getPostById() {
+        String url = BASE_URL + "/posts/" + samplePosts.get(0).getId();
+        HttpResponse<JsonNode> res = Unirest.get(url).asJson();
+        assertEquals(200, res.getStatus());
+        assertEquals(1, res.getBody().getArray().length());
+    }
+
+    @Test
+    public void getNonexistentPostsFails() {
+        String url = BASE_URL + "/posts/idontexist";
+        HttpResponse<JsonNode> res = Unirest.get(url).asJson();
+        assertEquals(404, res.getStatus());
+        assertNull(res.getBody());
+    }
 }
